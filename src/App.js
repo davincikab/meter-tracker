@@ -1,23 +1,26 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
 
+import MapComponent from './components/Map';
+
+import mapReq from './utils/getMapData';
+
 function App() {
+  const [state, setState ] = useState({ meters:[] })
+  useEffect(() => {
+      async function fetchData() {
+          let data = await mapReq.getMeters();
+          setState({...state, meters:data })
+      } 
+
+      fetchData();
+  }, []);
+
+  console.log(state);
+  const { meters } = state;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="map-wrapper">
+      { meters[0] && <MapComponent data={state.meters}/> }
     </div>
   );
 }
