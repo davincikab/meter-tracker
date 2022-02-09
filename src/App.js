@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import './App.css';
 
 import MapComponent from './components/Map';
-
 import mapReq from './utils/getMapData';
 
 function App() {
   const [state, setState ] = useState({ meters:[] })
+
   useEffect(() => {
       async function fetchData() {
           let data = await mapReq.getMeters();
@@ -14,7 +14,7 @@ function App() {
       } 
 
       fetchData();
-  }, []);
+  }, [state]);
 
   console.log(state);
   const { meters } = state;

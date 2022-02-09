@@ -45,7 +45,7 @@ const MapComponent = (props) => {
         }
     }
 
-    const { meters, isIconLoaded, center, clickedFeature } = state;
+    const { isIconLoaded, center, clickedFeature } = state;
     return (
         <Map
             style="mapbox://styles/mapbox/light-v10"

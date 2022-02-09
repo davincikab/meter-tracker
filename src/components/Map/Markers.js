@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Layer, Feature, Popup} from 'react-mapbox-gl';
+import { Layer, Feature} from 'react-mapbox-gl';
 
 const Markers = ({ items}) => {
     const [state, setState ] = useState({
@@ -8,18 +8,7 @@ const Markers = ({ items}) => {
 
     useEffect(() => {
         setState({...state, clickedFeature:null });
-    },[]);
-
-    
-    const handleClick = (e) => {
-        console.log(e);
-
-        setState(
-            Object.assign({}, {...state}, { 
-                clickedFeature:e.feature.properties }
-            ) 
-        );
-    }
+    },[state]);
 
     const handleMouseLeave = (e) => {
         e.target.getCanvas().style.cursor = "";
@@ -28,8 +17,6 @@ const Markers = ({ items}) => {
     const handleMouseEnter = (e) => {
         e.target.getCanvas().style.cursor = "pointer";
     }
-
-    const { clickedFeature } = state;
 
     return (
         <>

@@ -1,5 +1,4 @@
 import userMeters from "../mocks/data";
-import axios from "axios";
 
 const mapReq = {
     getMeterInfo:async function() {
