@@ -5,22 +5,24 @@ import MapComponent from './components/Map';
 import mapReq from './utils/getMapData';
 
 function App() {
-  const [state, setState ] = useState({ meters:[] })
+  const [meters, setMeters ] = useState([])
 
   useEffect(() => {
       async function fetchData() {
           let data = await mapReq.getMeters();
-          setState({...state, meters:data })
+          setMeters(data)
       } 
 
-      fetchData();
-  });
+      if(!meters[0]) {
+        fetchData();
+      }
+      
+  }, [meters]);
 
-  console.log(state);
-  const { meters } = state;
+  console.log(meters);
   return (
     <div className="map-wrapper">
-      { meters[0] && <MapComponent data={state.meters}/> }
+      { meters[0] && <MapComponent data={meters}/> }
     </div>
   );
 }
