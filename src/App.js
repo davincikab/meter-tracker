@@ -14,7 +14,7 @@ function App() {
       } 
 
       fetchData();
-  }, [state]);
+  });
 
   console.log(state);
   const { meters } = state;

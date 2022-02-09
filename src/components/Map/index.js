@@ -48,7 +48,7 @@ const MapComponent = (props) => {
     const { isIconLoaded, center, clickedFeature } = state;
     return (
         <Map
-            style={"mapbox://styles/mapbox/light-v10"}
+            style="mapbox://styles/mapbox/light-v10"
             center={center}
             zoom={[14]}
             pitch={[0]}

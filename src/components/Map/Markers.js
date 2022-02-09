@@ -8,7 +8,7 @@ const Markers = ({ items}) => {
 
     useEffect(() => {
         setState({...state, clickedFeature:null });
-    },[state]);
+    });
 
     const handleMouseLeave = (e) => {
         e.target.getCanvas().style.cursor = "";
