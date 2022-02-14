@@ -138,7 +138,9 @@ const PopupEl = ({ lat, lng, feature, resetActiveTower, layer}) => {
     return (
         <Popup
             coordinates={[lng, lat]}
-            closeOnClick={true}
+            offset={{
+                'bottom-left': [12, -38],  'bottom': [0, -18], 'bottom-right': [-12, -38]
+            }}
         >
            <PopupInfo 
                 layer={layer} 
