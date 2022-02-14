@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Layer, Feature} from 'react-mapbox-gl';
 
-const Markers = ({ items}) => {
+const CellMarkers = ({ items}) => {
+    // console.log(items);
+
     const [state, setState ] = useState({
         clickedFeature:null,
     });
@@ -21,9 +23,9 @@ const Markers = ({ items}) => {
     return (
         <>
             <Layer 
-                id="meters"
+                id="cell-tower"
                 type="symbol" 
-                layout={{ "icon-image": "electric-meter",  "icon-size":0.5}}
+                layout={{ "icon-image": "cell-tower",  "icon-size":0.75}}
                 paint={{"icon-color":"red"}}
                 onMouseEnter={handleMouseEnter}
                 omMouseLeave={handleMouseLeave}
@@ -31,8 +33,8 @@ const Markers = ({ items}) => {
                 { 
                     items.map(item => (
                         <Feature 
-                            coordinates={[item.lng, item.lat]} 
-                            key={item.id} 
+                            coordinates={[item.Long, parseFloat(item.Latt)]} 
+                            key={item['Cell Tower Name']} 
                             properties={item}
                         /> 
                     ))
@@ -43,4 +45,4 @@ const Markers = ({ items}) => {
 }
 
 
-export default Markers;
+export default CellMarkers;

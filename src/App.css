@@ -9,7 +9,23 @@
 }
 
 .mapboxgl-popup-content {
-  padding:0
+  padding:0;
+  width: 250px;
+}
+
+.mapboxgl-close-popup-button {
+  position: absolute;
+  padding:0.25rem;
+  top: 0;
+  right: 0;
+  border: 0;
+  text-align: center;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.mapboxgl-close-popup-button:hover {
+  background-color: #ddd;
 }
 
 .popup-content {
@@ -36,7 +52,7 @@
   opacity: 1;
   transition: all 1.5s ease;
   background-color: white;
-  width: 200px;
+  width: 250px;
 }
 
 .popup-body h1 {
@@ -53,4 +69,46 @@
   font-weight: 600;
   font-size: 13px;
   color:#000;
+}
+
+.autoComplete_wrapper {
+  display: inline-block;
+  position: absolute;
+  z-index: 2;
+  top: 3%;
+  background: white;
+  left: 2%;
+  padding: 0.75rem 1rem;
+  border-radius: 25px;
+  box-shadow: 2px 2px 0.3em #ddd;
+  color:crimson;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon-search {
+  margin-right:0.5rem;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.autoComplete_wrapper input {
+  line-height: 1.8;
+  border: 1px solid #ee6782;
+  border-radius: 5px;
+  width: 200px;
+}
+
+input {
+  outline: none;
+  border: 1px solid crimson;
+}
+
+div .list-item {
+  padding:0.25rem;
+  color:#000;
+  cursor: pointer;
+  border-radius: 3px;
 }

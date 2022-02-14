@@ -1,34 +1,58 @@
-import { useState} from 'react';
-
+import { useEffect, useState} from 'react';
+import { FaTimes } from 'react-icons/fa';
 import ReactMapboxGl, {Popup } from 'react-mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import meter from '../../assets/icons/electric-meter.png';
+import cellTowerIcon from '../../assets/icons/signal-tower.png';
+
+import { cellTower } from "../../mocks/data";
 
 
 import Markers from './Markers';
+import CellMarkers from './CellMarkers';
 
 const Map = ReactMapboxGl({
   accessToken:
   'pk.eyJ1IjoiZGF1ZGk5NyIsImEiOiJjanJtY3B1bjYwZ3F2NGFvOXZ1a29iMmp6In0.9ZdvuGInodgDk7cv-KlujA'
 });
 
-const MapComponent = (props) => {
+const MapComponent = ({data, activeTower, resetActiveTower }) => {
     const [state, setState ] = useState({
         isIconLoaded:false,
-        meters:[...props.data],
-        center:[101.69973647896333, 3.1419323464180278],
-        clickedFeature:null
+        isTowerIconLoaded:false,
+        meters:[...data],
+        center:[101.615067, 3.082352],
+        clickedFeature: null,
+        cellTowers:[...cellTower],
+        activeCellTower:null,
+        zoom:14
     });
 
-    const handleClick = (map, e) => {
-        let features = map.queryRenderedFeatures(e.point, {layers:['meters']});
+    useEffect(() => {
+        if(activeTower) {
+            setState({
+                ...state,
+                center:[activeTower.Long, parseFloat(activeTower.Latt)],
+                // activeCellTower:activeTower
+            })
+        }
+        
+    }, [activeTower]);
 
+    const handleClick = (map, e) => {
+        let features = map.queryRenderedFeatures(e.point, { layers:[ 'cell-tower', 'meters'] });
+        let layer = features[0] ? features[0].layer.id : "";
+
+        // if()
         setState({
             ...state,
-            clickedFeature:features[0] ? features[0].properties : null,
+            clickedFeature:features[0] ? {...features[0].properties, layer} : null,
             isIconLoaded:true,
-            center:map.getCenter()
+            isTowerIconLoaded:true,
+            center:map.getCenter(),
+            zoom:map.getZoom()
         });
+        
     }
 
     const handleStyleLoad = (map, e) => {
@@ -36,6 +60,7 @@ const MapComponent = (props) => {
         if(!map.hasImage('electric-meter')) {
             map.loadImage(meter, function(error, image) {
                 if (error) { console.log(error); return };
+                console.log(image);
 
                 map.addImage('electric-meter', image);
                 
@@ -43,14 +68,24 @@ const MapComponent = (props) => {
                 
             });
         }
+
+        if(!map.hasImage('cell-tower')) {          
+            map.loadImage(cellTowerIcon, function(error, image) {
+                if (error) { console.log(error); return }; 
+
+                map.addImage('cell-tower', image);
+                setState({...state, isTowerIconLoaded:true, isIconLoaded:true});
+            });
+        }
     }
 
-    const { isIconLoaded, center, clickedFeature } = state;
+    const { isIconLoaded, isTowerIconLoaded, center, clickedFeature, cellTowers, activeCellTower } = state;
+    console.log(activeCellTower);
     return (
         <Map
             style="mapbox://styles/mapbox/light-v10"
             center={center}
-            zoom={[14]}
+            zoom={[activeTower ? 18 : 14]}
             pitch={[0]}
             containerStyle={{
                 height: '100vh',
@@ -62,28 +97,87 @@ const MapComponent = (props) => {
             {
                 isIconLoaded &&
                 <Markers 
-                    items={props.data} 
+                    items={data} 
+                />
+            }
+
+            {
+                isTowerIconLoaded &&
+                <CellMarkers 
+                    items={cellTowers} 
                 />
             }
 
             {   
+                activeTower && 
+                <PopupEl
+                    lng={activeTower.Long} 
+                    lat={parseFloat(activeTower.Latt)}
+                    feature={activeTower}
+                    layer={'cell-tower'}
+                    resetActiveTower={resetActiveTower}
+                />
+            }
+
+
+            {   
                 clickedFeature && 
-                <Popup
-                    coordinates={[clickedFeature.lng, clickedFeature.lat]}
-                    closeOnClick={true}
-                >
-                        
-                    <div className='popup-body' >
-                        <h1>{clickedFeature.meterName}</h1>
-                        <div className='popup-section'>
-                            <div className='popup-item'><div>Location </div>  {clickedFeature.locationName} </div>
-                            <div className='popup-item'><div>Group Name </div>  {clickedFeature.groupName}</div>
-                        </div>
-                    </div>
-                </Popup>
+                <PopupEl
+                    lng={clickedFeature.lng || clickedFeature.Long} 
+                    lat={clickedFeature.lat || clickedFeature.Latt}
+                    feature={clickedFeature}
+                    layer={clickedFeature.layer}
+                    
+                />
             }
         </Map>
     )
+}
+
+const PopupEl = ({ lat, lng, feature, resetActiveTower, layer}) => {
+    return (
+        <Popup
+            coordinates={[lng, lat]}
+            closeOnClick={true}
+        >
+           <PopupInfo 
+                layer={layer} 
+                feature={feature} 
+                resetActiveTower={resetActiveTower} 
+            /> 
+        </Popup>
+    )
+}
+
+const PopupInfo = ({layer, feature, resetActiveTower}) => {
+    if(layer != 'meters') {
+        return (
+            <div className='popup-body' >
+                <div className='popup-header'>
+                    <h1>{feature["Cell Tower Name"]}</h1>
+                    <button className="mapboxgl-close-popup-button" onClick={resetActiveTower}>
+                        <FaTimes />
+                    </button>
+                </div>
+                        
+                <div className='popup-section'>
+                    <div className='popup-item'><div>Cell Tower Name </div>  {feature["Cell Tower Name"]} </div>
+                    <div className='popup-item'><div>District </div>  {feature["District"]}</div>
+                </div>
+            </div>
+        );
+    } else {
+        return (
+            <div className='popup-body' >
+                <h1>{feature.meterName}</h1>
+                <div className='popup-section'>
+                    <div className='popup-item'><div>Location </div>  {feature.locationName} </div>
+                    <div className='popup-item'><div>Group Name </div>  {feature.groupName}</div>
+                </div>
+            </div>
+        );
+    }
+    
 }
 
 export default MapComponent;
