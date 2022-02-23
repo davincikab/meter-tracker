@@ -80,7 +80,7 @@
   left: 2%;
   padding: 0.75rem 1rem;
   border-radius: 25px;
-  box-shadow: 2px 2px 0.3em #ddd;
+  box-shadow: 2px 2px 0.1em #222;
   color:crimson;
 
   display: flex;
@@ -111,4 +111,144 @@ div .list-item {
   color:#000;
   cursor: pointer;
   border-radius: 3px;
+}
+
+.section-district {
+  position: absolute;
+  z-index: 2;
+  top: 13%;
+  background: white;
+  left: 2%;
+  box-shadow: 0px 0px 0.2rem rgb(110, 110, 110);
+  border-radius: 5px;
+  width: 200px;
+}
+
+.section-district h6 {
+  margin:0;
+  font-size: 1rem;
+  padding:0.25rem;
+  text-align: left;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.section-district ul {
+  list-style: none;
+  width: auto;
+  padding: 0;
+  margin: 0px;
+}
+
+ul .list-item:hover {
+  background-color: #ee6782;
+  color:white;
+}
+
+
+.widget-section {
+  position: absolute;
+  z-index: 2;
+  top:3%;
+  right:2%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.widget-section .widget-item {
+  border-radius: 50%;
+  padding:0.5rem 0.5rem;
+  font-size: 1.2em;
+  background-color: white;
+  box-shadow: 0px 0px 0.2rem rgb(109, 109, 109);
+  margin:0.5rem 0;
+  cursor:pointer;
+
+  display: flex;
+  justify-content: flex;
+  align-items: center;
+}
+
+.status-section {
+  position: absolute;
+  z-index: 2;
+  bottom: 5%;
+  left:5%;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 5px;
+  box-shadow: 0px 0px 0.2rem #222;
+  padding:0.5rem;
+}
+
+.status-section__inner {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+  height: 80px;
+  width: auto;
+}
+
+.status-section .section-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.status-item {
+  box-shadow: 0px 0px 0.2rem #222;
+  padding:0.25rem 0.375rem;
+  flex: 1;
+  text-align: center;
+  margin:0 0.25rem;
+  border-radius: 2px;
+}
+
+.status-item-title  {
+  font-weight: 600;
+}
+
+.text-count  {
+  text-align: center;
+  font-weight: 800;
+  color:#222;
+}
+
+.text-count h5 {
+  margin:0px;
+  font-size: 1.8rem;
+  color:#444;
+}
+
+/* modal window */
+.modal-window {
+  position: absolute;
+  top:3%;
+  right:2%;
+  z-index: 100;
+  width:400px;
+  height: 80vh;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 2px 2px 0.5rem #222;
+}
+
+.modal-header {
+  border-bottom: 1.2px solid #222;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem 0.375rem;
+}
+
+.modal-header .close-button {
+  cursor: pointer;
+}
+
+.modal-body {
+  padding:0.5rem;
 }

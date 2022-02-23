@@ -83,7 +83,7 @@ const MapComponent = ({data, activeTower, resetActiveTower }) => {
     console.log(activeCellTower);
     return (
         <Map
-            style="mapbox://styles/mapbox/light-v10"
+            style="mapbox://styles/mapbox/dark-v10"
             center={center}
             zoom={[activeTower ? 18 : 14]}
             pitch={[0]}
@@ -183,3 +183,9 @@ const PopupInfo = ({layer, feature, resetActiveTower}) => {
 }
 
 export default MapComponent;
+
+// Black theme
+
+// Color the pins
+// Color Geofences
+//  Widgets
