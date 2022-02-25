@@ -83,7 +83,7 @@ const MapComponent = ({data, activeTower, resetActiveTower }) => {
     console.log(activeCellTower);
     return (
         <Map
-            style="mapbox://styles/mapbox/dark-v10"
+            style="mapbox://styles/mapbox/light-v10"
             center={center}
             zoom={[activeTower ? 18 : 14]}
             pitch={[0]}
@@ -156,15 +156,64 @@ const PopupInfo = ({layer, feature, resetActiveTower}) => {
         return (
             <div className='popup-body' >
                 <div className='popup-header'>
-                    <h1>{feature["Cell Tower Name"]}</h1>
                     <button className="mapboxgl-close-popup-button" onClick={resetActiveTower}>
+                        CLOSE
                         <FaTimes />
                     </button>
                 </div>
                         
                 <div className='popup-section'>
-                    <div className='popup-item'><div>Cell Tower Name </div>  {feature["Cell Tower Name"]} </div>
-                    <div className='popup-item'><div>District </div>  {feature["District"]}</div>
+                    <div className='popup-section__inner'>
+                        <div>
+                            <div className='popup-item'><div>Site Name: </div>  {feature["Cell Tower Name"]} </div>
+                            <div className='popup-item'><div>District: </div>  {feature["District"]}</div>
+                        </div>
+
+                        <div className='status'> GOOD </div>
+                    </div>
+                   
+
+                    <div className=''>
+                        <table>
+                            <tr>
+                                <th>SUMMARY</th>
+                                <th>STATUS</th>
+                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td>Door</td>
+                                    <td>Close (unlocked)</td>
+                                </tr>
+                                <tr>
+                                    <td>Structure</td>
+                                    <td>OK</td>
+                                </tr>
+                                <tr>
+                                    <td>Illegal Installation</td>
+                                    <td>None</td>
+                                </tr>
+                                <tr> 
+                                    <td>Illegal Activity</td>
+                                    <td>None</td>
+                                </tr>
+                                <tr> 
+                                    <td>Energy</td>
+                                    <td>Normal</td> 
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div className='popup-footer'>
+                    <div className='popup-footer__inner'>
+                        <img src="/assets/icons/activity.png" alt=''/>
+                        <div>1821 KW/h</div>
+                    </div>
+                    <div className='popup-footer__inner'>
+                        <img src="/assets/icons/right-angle-of-90-degrees.png" alt=''/>
+                        <div>Normal at 0<sup>0</sup></div>
+                    </div>
                 </div>
             </div>
         );

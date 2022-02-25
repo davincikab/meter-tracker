@@ -3,7 +3,7 @@ import { FaTimes } from 'react-icons/fa';
 
 const Modal = (props) => {
     return (
-    <div className='modal-window'>
+    <div className='modal-window d-none'>
         <div className='modal-header'>
             <div className='modal-title'>
               Site Name
