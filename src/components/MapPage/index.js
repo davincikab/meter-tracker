@@ -81,6 +81,19 @@ function MapPage() {
             placeholder:'Search Cell Tower ...'
           }}
         />
+
+
+        {/* select the field */}
+        <div className='section-field'>
+          <div>
+            <input name="field" type="radio"/>
+            <label>Name</label>
+          </div>
+          <div>
+            <input name="field" type="radio"/>
+            <label>District</label>
+          </div>
+        </div>
       </div>
 
       <div className="section-district">
