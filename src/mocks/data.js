@@ -1,3 +1,5 @@
+// import faker from 'faker';
+
 const userMeters = [
     {
         "serialNumber": "SRRR",
@@ -642,4 +644,154 @@ const cellTower = [
     }
 ];
 
-export { userMeters, cellTower };
+
+// modal data
+const statusData = {
+  'detected activity':[
+    {
+      "Cell Tower Name": "PC0019",
+      "Latt": "3.034973",
+      "Long": 101.613579,
+      "District": "Puchong",
+      "Status":'Door opened today at 10PM',
+      "danger":true
+    },
+    {
+      "Cell Tower Name": "PC0014",
+      "Latt": "3.037657",
+      "Long": 101.618479,
+      "District": "Puchong",
+      "Status":'Motion detected today at 12:30PM',
+      "danger":true
+    },
+    {
+      "Cell Tower Name": "SA0012",
+      "Latt": "3.092622",
+      "Long": 101.580875,
+      "District": "Shah Alam",
+      "Status":'Motion detected today at 12:30PM with approval'
+    }
+  ],
+  'illegal installation':[
+    {
+      "Cell Tower Name": "SB0011",
+      "Latt": "3.074799",
+      "Long": 101.600876,
+      "District": "Subang Jaya",
+      "Status":"additional antenna detected (monitoring)"
+    },
+    {
+      "Cell Tower Name": "KJ0001",
+      "Latt": "3.104954",
+      "Long": 101.594316,
+      "District": "Kelana Jaya",
+      "Status":"Warning! additional energy usage detected",
+      "warning":true
+    },
+    {
+      "Cell Tower Name": "SB0012",
+      "Latt": "3.066924",
+      "Long": 101.604197,
+      "District": "Subang Jaya",
+      "Status":"additional antenna detected",
+      "danger":true
+    },
+    {
+      "Cell Tower Name": "PC0004",
+      "Latt": "3.06312561",
+      "Long": 101.6448212,
+      "District": "Puchong",
+      "Status":"additional antenna detected",
+      "danger":true
+    },
+  ],
+  'abnormal energy':[
+    {
+      "Cell Tower Name": "SA0012",
+      "Latt": "3.092622",
+      "Long": 101.580875,
+      "District": "Shah Alam",
+      "Status":'Increase in KWh usage per 30 minutes',
+      "danger":true
+    },
+    {
+      "Cell Tower Name": "PJ0003",
+      "Latt": "3.084565",
+      "Long": 101.608331,
+      "District": "Petaling Jaya",
+      "Status":'Under voltage detected at 210V',
+      "danger":true
+    },
+    {
+      "Cell Tower Name": "PJ0004",
+      "Latt": "3.082352",
+      "Long": 101.615067,
+      "District": "Petaling Jaya",
+      "Status":'Power factor below 0.75 rating',
+      "danger":true
+    },
+  ],
+  'structural activity':[
+    {
+      "Cell Tower Name": "AD0009",
+      "Latt": "3.120803833",
+      "Long": 101.5885162,
+      "District": "Ara Damansara",
+      "Status":"Critical! Tower tilting at 5°. Wind speed at 30kts ",
+      "danger":true
+    },
+    {
+      "Cell Tower Name": "PC0005",
+      "Latt": "3.060875",
+      "Long": 101.642165,
+      "District": "Puchong",
+      "Status":"Warning! Tower tilting at 2°. Wind speed at 10kts",
+      "warning":true
+    },
+  ]
+};
+
+
+const graphData = {
+  titltAngle:[1, 1.2, 3, 0.5, 1, 1.4, 2, 3.2, 2.4, 1, 1.5, 0.5, 2, 2.4, 2.2, 1],
+  generator:[
+    {Status:"On	", "Fuel Level": 80},
+    {Status:"Off", "Fuel Level": 	90},
+    {Status:"On	", "Fuel Level": 100},
+    {Status:"Off", "Fuel Level": 	40},
+    {Status:"On	", "Fuel Level": 45},
+    {Status:"Off", "Fuel Level": 	50},
+    {Status:"On	", "Fuel Level": 55},
+    {Status:"Off", "Fuel Level": 	60},
+    {Status:"On	", "Fuel Level": 65},
+    {Status:"Off", "Fuel Level": 	70},
+    {Status:"On	", "Fuel Level": 75},
+    {Status:"Off", "Fuel Level": 	80},
+    {Status:"On	", "Fuel Level": 85},
+    {Status:"Off", "Fuel Level": 	90},
+    {Status:"On ", "Fuel Level": 	95},
+    {Status:"Off", "Fuel Level": 	100},
+  ],
+  temperature:[36, 37, 33, 28, 31, 41, 34, 27, 32, 45, 33, 37, 34, 28, 32, 31],
+  door:[
+    {Status:"Close"	, "Lock/Unlock":"Unlock" },
+    {Status:"Open", "Lock/Unlock":"Unlock" },
+    {Status:"Close"	, "Lock/Unlock":"Lock" },
+    {Status:"Open", "Lock/Unlock":"Unlock" },
+    {Status:"Close"	, "Lock/Unlock":"Lock" },
+    {Status:"Close"	, "Lock/Unlock":"Lock" },
+    {Status:"Close"	, "Lock/Unlock":"Lock" },
+    {Status:"Open", "Lock/Unlock":"Unlock" },
+    {Status:"Close"	, "Lock/Unlock":"Lock" },
+    {Status:"Close"	, "Lock/Unlock":"Lock" },
+    {Status:"Close"	, "Lock/Unlock":"Unlock" },
+    {Status:"Open", "Lock/Unlock":"Unlock" },
+    {Status:"Close"	, "Lock/Unlock":"Lock" },
+    {Status:"Close"	, "Lock/Unlock":"Lock" },
+    {Status:"Open", "Lock/Unlock":"Unlock" },
+    {Status:"Open", "Lock/Unlock":"Unlock" },
+  ],
+  wind:[7,4,10,5,7,5,8,12,7,6,3,9,10,8,7,5]
+};
+
+export { userMeters, cellTower, statusData, graphData };

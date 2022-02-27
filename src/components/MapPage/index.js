@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { FaLightbulb, FaSearch, FaTimes } from 'react-icons/fa';
+import { FaSearch } from 'react-icons/fa';
 
 import MapComponent from '../Map';
 import WidgetSection from '../Widgets';
@@ -8,15 +8,23 @@ import StatusSection from '../StatusSection';
 
 import mapReq from '../../utils/getMapData';
 import Autocomplete from 'react-autocomplete';
-import { cellTower } from "../../mocks/data";
+import { cellTower, statusData } from "../../mocks/data";
 import Modal from '../Modal';
+import StatusContent from '../StatusSection/StatusContent';
+import WidgetItem from '../Widgets/WidgetItems';
 
-function MapPage() {
-  const [meters, setMeters ] = useState([]);
-  const [value, setValue ] = useState("");
-  const [districts, setDistricts ] = useState([]);
-  const [ activeTower, setActiveTower ] = useState(null);
-  
+const INITIAL_STATE = {
+  meters:[],
+  value:"",
+  districts:[],
+  activeTower:null,
+  isModalOpen:false,
+  statusData,
+  modalContent:""
+};
+
+function MapPage() {  
+  const [state, setState] = useState(INITIAL_STATE);
 
   useEffect(() => {
       async function fetchData() {
@@ -25,33 +33,94 @@ function MapPage() {
           let dist = [...new Set(cellTower.map(item => item.District)) ];
           console.log(dist);
 
-          setDistricts(dist);
-
-          setMeters(data)
+          setState({
+            ...state,
+            meters:data,
+            districts:dist
+          });
       } 
 
       if(!meters[0]) {
         fetchData();
       }
       
-  }, [meters]);
+  }, [state.meters]);
 
   const onSelect = (val) => {
     let tower = cellTower.find(tower => tower['Cell Tower Name'] == val);
-    if(tower) {
-      setActiveTower(tower)
-    }
+    
+    console.log(tower);
 
-    setValue(val)
+    setState({
+      ...state,
+      activeTower:tower || null,
+      value:val
+    })
+  }
+
+  const onValueChange = (value) => {
+    setState({
+      ...state,
+      value
+    })
+  }
+
+  const resetActiveTower = () => {
+    setState({
+      ...state,
+      activeTower:null
+    })
   }
 
   const handleDistrictClick = (district) => {
     console.log(district);
   }
 
+  const onStatusItemClick = (status) => {
+    let modalContent = getModalContent(true, status,state.statusData[status]);
 
-  console.log(meters);
+    // get the status data
+    setState({
+      ...state,
+      isModalOpen:true,
+      modalContent
+    });
 
+
+  }
+
+  const onWidgetClick = (widget) => {
+    let modalContent = getModalContent(false, widget, []);
+    
+    // get the status data
+    setState({
+      ...state,
+      isModalOpen:true,
+      modalContent
+    });
+  }
+
+  const closeModal = () => {
+    setState({
+      ...state,
+      isModalOpen:false
+    });
+
+  }
+
+  const getModalContent = (isStatus, title, data) => {
+    if(isStatus) {
+      return ( <StatusContent title={title} data={data} /> )
+    } else {
+      return <WidgetItem type={title} data={data}  activeTower={activeTower} />
+    }
+  }
+
+  const { meters, activeTower, districts, value, 
+    isModalOpen, modalContent, statusData
+  } = state;
+
+  console.log(isModalOpen);
   return (
     <div className="map-wrapper">
       <div className='autoComplete_wrapper'>
@@ -75,7 +144,7 @@ function MapPage() {
             </div>
           }
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => onValueChange(e.target.value)}
           onSelect={(val) => onSelect(val)}
           inputProps={{
             placeholder:'Search Cell Tower ...'
@@ -96,7 +165,7 @@ function MapPage() {
         </div>
       </div>
 
-      <div className="section-district">
+      <div className="section-district d-none">
           <h6 className='my-0'>Districts</h6>
           <ul className="list-section">
             {
@@ -114,14 +183,29 @@ function MapPage() {
           </ul>
       </div>
 
-      <WidgetSection />
-      <Modal />
-      <StatusSection />
+      <WidgetSection 
+        onItemClick={onWidgetClick} 
+        activeTower={activeTower}
+      />
+
+      <Modal 
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+      >
+        {modalContent}
+      </Modal>
+
+      <StatusSection 
+        onItemClick={onStatusItemClick} 
+        sites={meters.length}
+        data={statusData} 
+      />
 
       { meters[0] && <MapComponent 
         data={meters} 
         activeTower={activeTower} 
-        resetActiveTower={() => setActiveTower(null)}
+        resetActiveTower={() => resetActiveTower(null)}
+        updateActiveTower={onSelect}
         /> 
       }
     </div>

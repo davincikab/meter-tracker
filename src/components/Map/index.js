@@ -16,7 +16,7 @@ const Map = ReactMapboxGl({
   'pk.eyJ1IjoiZGF1ZGk5NyIsImEiOiJjanJtY3B1bjYwZ3F2NGFvOXZ1a29iMmp6In0.9ZdvuGInodgDk7cv-KlujA'
 });
 
-const MapComponent = ({data, activeTower, resetActiveTower }) => {
+const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower }) => {
     const [state, setState ] = useState({
         isIconLoaded:false,
         isTowerIconLoaded:false,
@@ -43,7 +43,12 @@ const MapComponent = ({data, activeTower, resetActiveTower }) => {
         let features = map.queryRenderedFeatures(e.point, { layers:[ 'cell-tower', 'meters'] });
         let layer = features[0] ? features[0].layer.id : "";
 
-        // if()
+        if(layer == 'cell-tower') {
+            console.log("Cell tower");
+
+            updateActiveTower(features[0].properties['Cell Tower Name'])
+            return;
+        }
         setState({
             ...state,
             clickedFeature:features[0] ? {...features[0].properties, layer} : null,
@@ -52,6 +57,7 @@ const MapComponent = ({data, activeTower, resetActiveTower }) => {
             center:map.getCenter(),
             zoom:map.getZoom()
         });
+
         
     }
 
@@ -175,10 +181,13 @@ const PopupInfo = ({layer, feature, resetActiveTower}) => {
 
                     <div className=''>
                         <table>
-                            <tr>
-                                <th>SUMMARY</th>
-                                <th>STATUS</th>
-                            </tr>
+                            <thead>
+                                <tr>
+                                    <th>SUMMARY</th>
+                                    <th>STATUS</th>
+                                </tr>
+                            </thead>
+                            
                             <tbody>
                                 <tr>
                                     <td>Door</td>

@@ -265,6 +265,12 @@ ul .list-item:hover {
   height: 20px;
 }
 
+.widget-title {
+  text-transform: uppercase;
+  padding:0.5rem;
+}
+
+/* status section */
 .status-section {
   position: absolute;
   z-index: 2;
@@ -345,10 +351,10 @@ ul .list-item:hover {
 .modal-window {
   position: absolute;
   top:15%;
-  right:25%;
+  right:15%;
   z-index: 100;
-  width:50%;
-  height: 60vh;
+  min-width:70%;
+  min-height: 60vh;
   background-color: #222222d5;
   color:white;
   border-radius: 2px;
@@ -364,7 +370,13 @@ ul .list-item:hover {
   margin:1rem 0 0;
 }
 
-.modal-header .modal-close-button {
+.modal-title {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.modal-window .modal-close-button {
   position: absolute;
   color:tomato;
   top:-35px;
@@ -388,23 +400,86 @@ ul .list-item:hover {
   padding:0.5rem;
 }
 
-.modal-body table {
+.table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.8rem;
 }
 
-.modal-body table th {
+.table th {
   text-align: left;
 }
 
-
-.modal-body table tr {
+.table tr {
   border-bottom: 1px solid #fff;
   line-height: 1.6;
+}
+
+/* cards */
+.grid-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+  grid-template-rows: repeat(2, 200px);
+  align-content: center;
+  padding: 10px 0px 20px 20px;
+}
+
+.card {
+  background-color: rgba(11, 8, 48, 0.884);
+  width: 95%;
+  border-radius: 10px;
+  overflow: hidden;
+  /* height: 200px; */
+}
+
+.card-body {
+  padding:0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-title {
+  font-weight: 700;
+  color:orange;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.card-text {
+  font-weight: 800;
+  color:rgb(209, 172, 9);
+  font-size: 2.5rem;
+}
+
+.table-section {
+  padding:15px;
 }
 
 /* util classes */
 .d-none {
   display: none !important;
+}
+
+.text-danger {
+  color:#b11736
+}
+
+.text-warning {
+  color:rgb(229, 255, 0);
+}
+
+.text-success {
+  color:rgb(7, 199, 7);
+}
+
+
+/* media quries */
+@media screen {
+  
 }
