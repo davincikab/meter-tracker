@@ -1,7 +1,10 @@
-import { useEffect, useState} from 'react';
+import React, { useEffect, useState} from 'react';
+
 import { FaTimes } from 'react-icons/fa';
-import ReactMapboxGl, {Popup } from 'react-mapbox-gl';
+import ReactMapboxGl, {Popup, GeoJSONLayer } from 'react-mapbox-gl';
+import * as turf from '@turf/turf'
 import 'mapbox-gl/dist/mapbox-gl.css';
+
 import meter from '../../assets/icons/electric-meter.png';
 import cellTowerIcon from '../../assets/icons/signal-tower.png';
 
@@ -16,7 +19,7 @@ const Map = ReactMapboxGl({
   'pk.eyJ1IjoiZGF1ZGk5NyIsImEiOiJjanJtY3B1bjYwZ3F2NGFvOXZ1a29iMmp6In0.9ZdvuGInodgDk7cv-KlujA'
 });
 
-const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower }) => {
+const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, districtPolygon }) => {
     const [state, setState ] = useState({
         isIconLoaded:false,
         isTowerIconLoaded:false,
@@ -28,6 +31,8 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower })
         zoom:14
     });
 
+    const mapRef = React.useRef(null);
+
     useEffect(() => {
         if(activeTower) {
             setState({
@@ -36,8 +41,19 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower })
                 // activeCellTower:activeTower
             })
         }
-        
-    }, [activeTower]);
+
+        if(districtPolygon && mapRef) {
+            let { map } = mapRef.current.state;
+
+            console.log(map);
+
+            let bounds = turf.bbox(districtPolygon);
+            map.fitBounds(bounds, { paddding:150});
+        }
+
+        console.log(mapRef);
+
+    }, [activeTower, districtPolygon]);
 
     const handleClick = (map, e) => {
         let features = map.queryRenderedFeatures(e.point, { layers:[ 'cell-tower', 'meters'] });
@@ -83,12 +99,15 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower })
                 setState({...state, isTowerIconLoaded:true, isIconLoaded:true});
             });
         }
+
+       
     }
 
     const { isIconLoaded, isTowerIconLoaded, center, clickedFeature, cellTowers, activeCellTower } = state;
     console.log(activeCellTower);
     return (
         <Map
+            ref={mapRef}
             style="mapbox://styles/mapbox/dark-v10"
             center={center}
             zoom={[activeTower ? 18 : 14]}
@@ -134,6 +153,24 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower })
                     feature={clickedFeature}
                     layer={clickedFeature.layer}
                     
+                />
+            }
+
+            {
+                districtPolygon &&
+                <GeoJSONLayer
+                    data={districtPolygon}
+                    fillPaint={{
+                        "fill-color":'rgb(209, 172, 9)',
+                        "fill-opacity":0.4
+                    }}
+                    symbolLayout={{
+                        "text-field": "{place}",
+                        "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+                        "text-offset": [0, 0.6],
+                        "text-anchor": "top"
+                    }}
+                    before={"cell-tower"}
                 />
             }
         </Map>

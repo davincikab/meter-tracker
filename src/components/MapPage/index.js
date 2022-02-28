@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { FaSearch } from 'react-icons/fa';
+import * as turf from '@turf/turf'
 
 import MapComponent from '../Map';
 import WidgetSection from '../Widgets';
@@ -20,7 +21,9 @@ const INITIAL_STATE = {
   activeTower:null,
   isModalOpen:false,
   statusData,
-  modalContent:""
+  modalContent:"",
+  searchField:"Cell Tower Name",
+  districtPolygon:null
 };
 
 function MapPage() {  
@@ -47,10 +50,26 @@ function MapPage() {
   }, [state.meters]);
 
   const onSelect = (val) => {
-    let tower = cellTower.find(tower => tower['Cell Tower Name'] == val);
-    
-    console.log(tower);
+    if(searchField == 'District') {
+      let towers = cellTower.filter(tower => tower['District'] == val);
 
+      let features = towers.map(tower => turf.point([parseFloat(tower.Long), parseFloat(tower.Latt)]));
+      let fc = turf.featureCollection(features);
+      let hull = turf.convex(fc);
+
+      console.log(hull);
+      
+      setState({
+        ...state,
+        value:val,
+        districtPolygon:hull
+      });
+
+      // creat the convex hull
+      return
+    }
+
+    let tower = cellTower.find(tower => tower['Cell Tower Name'] == val);
     setState({
       ...state,
       activeTower:tower || null,
@@ -89,6 +108,20 @@ function MapPage() {
 
   }
 
+  const updateSearchField = (e) => {
+    const { value } = e.target;
+
+    setState({
+      ...state,
+      searchField:value
+    });
+  }
+
+  const getDistrictsPolygon = (cellTowers) => {
+    // group by districts
+
+  }
+
   const onWidgetClick = (widget) => {
     let modalContent = getModalContent(false, widget, []);
     
@@ -123,10 +156,14 @@ function MapPage() {
   }
 
   const { meters, activeTower, districts, value, 
-    isModalOpen, modalContent, statusData
+    isModalOpen, modalContent, statusData, searchField, districtPolygon
   } = state;
 
-  console.log(isModalOpen);
+  if(searchField == 'Districts') {
+
+  }
+
+  console.log(districts);
   return (
     <div className="map-wrapper">
       <div className='autoComplete_wrapper'>
@@ -134,9 +171,15 @@ function MapPage() {
             <FaSearch />
         </div>
         <Autocomplete
-          getItemValue={(item) => item["Cell Tower Name"]}
-          items={[...cellTower]}
-          shouldItemRender={(item, value) => item["Cell Tower Name"].toLowerCase().indexOf(value.toLowerCase()) > -1}
+          getItemValue={(item) => searchField === 'District' ? item : item["Cell Tower Name"]}
+          items={searchField !== 'District' ? [...cellTower] : [...districts]}
+          shouldItemRender={(item, value) => {
+            if(searchField === 'District') {
+              return item.toLowerCase().indexOf(value.toLowerCase()) > -1
+            }
+
+            return item[searchField].toLowerCase().indexOf(value.toLowerCase()) > -1
+          }}
           renderItem={(item, isHighlighted) =>
             <div 
               className="list-item" 
@@ -144,9 +187,10 @@ function MapPage() {
                 background: isHighlighted ? '#ee6782' : 'white',
                 color:isHighlighted ? 'white' : '#333' 
               }} 
-              key={item["Cell Tower Name"]}
+              key={searchField === 'District' ? item :item[searchField]}
             >
-              {item["Cell Tower Name"]}, {item["District"]}
+              { searchField === 'District' && ` ${item}`}
+              { searchField !== 'District' && `${item["Cell Tower Name"]}, ${item["District"]}`}
             </div>
           }
           value={value}
@@ -161,12 +205,26 @@ function MapPage() {
         {/* select the field */}
         <div className='section-field'>
           <div>
-            <input name="field" type="radio"/>
-            <label>Name</label>
+            <input 
+              name="search_field" 
+              type="radio" 
+              value="Cell Tower Name" 
+              id="tower" 
+              onChange={updateSearchField} 
+              checked={searchField === "Cell Tower Name"}
+            />
+            <label htmlFor='tower'>Name</label>
           </div>
           <div>
-            <input name="field" type="radio"/>
-            <label>District</label>
+            <input  
+              name="search_field"  
+              type="radio"  
+              value="District"  
+              id="district"  
+              onChange={updateSearchField} 
+              checked={searchField === "District"}
+            />
+            <label htmlFor='district'>District</label>
           </div>
         </div>
       </div>
@@ -212,6 +270,7 @@ function MapPage() {
         activeTower={activeTower} 
         resetActiveTower={() => resetActiveTower(null)}
         updateActiveTower={onSelect}
+        districtPolygon={districtPolygon}
         /> 
       }
     </div>

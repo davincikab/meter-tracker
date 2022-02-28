@@ -344,7 +344,7 @@ const cellTower = [
     },
     {
       "Cell Tower Name": "KJ0003",
-      "Latt": "�3.105985",
+      "Latt": "3.105985",
       "Long": 101.59967,
       "District": "Kelana Jaya"
     },
@@ -392,7 +392,7 @@ const cellTower = [
     },
     {
       "Cell Tower Name": "KJ0011",
-      "Latt": "�3.12585",
+      "Latt": "3.12585",
       "Long": 101.604736,
       "District": "Kelana Jaya"
     },
@@ -410,7 +410,7 @@ const cellTower = [
     },
     {
       "Cell Tower Name": "KJ0014",
-      "Latt": "�3.126542",
+      "Latt": "3.126542",
       "Long": 101.59602,
       "District": "Kelana Jaya"
     },
@@ -488,7 +488,7 @@ const cellTower = [
     },
     {
       "Cell Tower Name": "AD0010",
-      "Latt": "�3.122177",
+      "Latt": "3.122177",
       "Long": 101.580551,
       "District": "Ara Damansara"
     },
@@ -536,7 +536,7 @@ const cellTower = [
     },
     {
       "Cell Tower Name": "PC0002",
-      "Latt": "�3.0658721923828",
+      "Latt": "3.0658721923828",
       "Long": 101.6379547,
       "District": "Puchong"
     },
