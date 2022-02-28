@@ -279,12 +279,14 @@ ul .list-item:hover {
   width: auto;
   display: flex;
   flex-direction: column;
-  text-shadow: 0px 0px 0.2rem #fff;
+  text-shadow: 0px 0px 0.2rem #222;
+
+  color: white;
 }
 
 .widget-text .text-muted {
   font-weight: 700;
-  color:rgb(65, 65, 65);
+  color:rgb(194, 194, 194);
   font-size: 0.9rem;
 }
 /* status section */
