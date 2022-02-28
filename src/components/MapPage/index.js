@@ -110,7 +110,13 @@ function MapPage() {
 
   const getModalContent = (isStatus, title, data) => {
     if(isStatus) {
-      return ( <StatusContent title={title} data={data} /> )
+      return (
+        <StatusContent 
+            title={title} 
+            data={data} 
+            updateActiveTower={onSelect} 
+          /> 
+        )
     } else {
       return <WidgetItem type={title} data={data}  activeTower={activeTower} />
     }

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const StatusContent = ({title, data }) => {
+const StatusContent = ({title, data,  updateActiveTower }) => {
     const getClassName = (item) => {
         if(item.warning) {
             return 'text-warning';
@@ -39,7 +39,7 @@ const StatusContent = ({title, data }) => {
               </thead>
               <tbody>
                   {data.map((item, index) => (
-                    <tr key={index}>
+                    <tr key={index} onClick={() =>  updateActiveTower(item['Cell Tower Name'])}>
                         <td>{index}</td>
                         <td>{item['Cell Tower Name']}</td>
                         <td>{item['District']} </td>

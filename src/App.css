@@ -221,7 +221,7 @@ ul .list-item:hover {
   position: absolute;
   z-index: 2;
   top:3%;
-  right:2%;
+  right:12%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -247,6 +247,7 @@ ul .list-item:hover {
 }
 
 .widget-section .widget-item {
+  position: relative;
   border-radius: 8px;
   padding:0.5rem 0.5rem;
   font-size: 1.2em;
@@ -270,6 +271,22 @@ ul .list-item:hover {
   padding:0.5rem;
 }
 
+.widget-text {
+  position: absolute;
+  top:0%;
+  right:-130px;
+  min-width: 120px;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  text-shadow: 0px 0px 0.2rem #fff;
+}
+
+.widget-text .text-muted {
+  font-weight: 700;
+  color:rgb(65, 65, 65);
+  font-size: 0.9rem;
+}
 /* status section */
 .status-section {
   position: absolute;
@@ -413,6 +430,7 @@ ul .list-item:hover {
 .table tr {
   border-bottom: 1px solid #fff;
   line-height: 1.6;
+  cursor: pointer;
 }
 
 /* cards */
