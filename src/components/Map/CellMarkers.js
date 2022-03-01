@@ -20,13 +20,19 @@ const CellMarkers = ({ items}) => {
         e.target.getCanvas().style.cursor = "pointer";
     }
 
+    const getIconColor = () => {
+        let colors = ['#e41a1c','#377eb8','#4daf4a','#984ea3'];
+
+        let i = Math.ceil(Math.random() * 3);
+        return colors[i];
+    }
     return (
         <>
             <Layer 
                 id="cell-tower"
                 type="symbol" 
                 layout={{ "icon-image": "cell-tower",  "icon-size":0.75}}
-                paint={{"icon-color":"red"}}
+                paint={{"icon-color":getIconColor()}}
                 onMouseEnter={handleMouseEnter}
                 omMouseLeave={handleMouseLeave}
             >

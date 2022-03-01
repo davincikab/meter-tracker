@@ -237,7 +237,7 @@ const StructuralContent = (props) => {
     let data = addRandomDates(values);
 
     data = data.map((item, index) => {
-        item['status'] = `${item['value']} ° with windspeed of  ${speeds[index]}% kts`;
+        item['status'] = `${item['value']} ° with windspeed of  ${speeds[index]} kts`;
         return item;
     });
 

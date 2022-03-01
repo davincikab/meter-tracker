@@ -13,6 +13,7 @@ import { cellTower } from "../../mocks/data";
 
 import Markers from './Markers';
 import CellMarkers from './CellMarkers';
+import customLayer from './utils/customLayer';
 
 const Map = ReactMapboxGl({
   accessToken:
@@ -24,11 +25,12 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, d
         isIconLoaded:false,
         isTowerIconLoaded:false,
         meters:[...data],
-        center:[101.615067, 3.082352],
+        // center:[101.615067, 3.082352],
+        center:[148.9819, -35.39847],
         clickedFeature: null,
         cellTowers:[...cellTower],
         activeCellTower:null,
-        zoom:14
+        zoom:19
     });
 
     const mapRef = React.useRef(null);
@@ -56,7 +58,7 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, d
     }, [activeTower, districtPolygon]);
 
     const handleClick = (map, e) => {
-        let features = map.queryRenderedFeatures(e.point, { layers:[ 'cell-tower', 'meters'] });
+        let features = map.queryRenderedFeatures(e.point, { layers:[ 'cell-tower'] });
         let layer = features[0] ? features[0].layer.id : "";
 
         if(layer == 'cell-tower') {
@@ -95,12 +97,12 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, d
             map.loadImage(cellTowerIcon, function(error, image) {
                 if (error) { console.log(error); return }; 
 
-                map.addImage('cell-tower', image);
+                map.addImage('cell-tower', image, {sdf:true});
                 setState({...state, isTowerIconLoaded:true, isIconLoaded:true});
             });
         }
 
-       
+        map.addLayer(customLayer, 'waterway-label');
     }
 
     const { isIconLoaded, isTowerIconLoaded, center, clickedFeature, cellTowers, activeCellTower } = state;
@@ -110,8 +112,8 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, d
             ref={mapRef}
             style="mapbox://styles/mapbox/dark-v10"
             center={center}
-            zoom={[activeTower ? 18 : 14]}
-            pitch={[0]}
+            zoom={[activeTower ? 18 : 19]}
+            pitch={[45]}
             containerStyle={{
                 height: '100vh',
                 width: '100vw'
@@ -119,13 +121,7 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, d
             onStyleLoad={handleStyleLoad}
             onClick={handleClick}
         >   
-            {
-                isIconLoaded &&
-                <Markers 
-                    items={data} 
-                />
-            }
-
+            
             {
                 isTowerIconLoaded &&
                 <CellMarkers 

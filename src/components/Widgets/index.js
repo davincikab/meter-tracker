@@ -1,6 +1,10 @@
 import { FaLightbulb, FaSearch } from 'react-icons/fa';
 
 const WidgetSection = (props) => {
+    let widgetData = {
+      power:1821,
+    };
+
     return (
         <div className='widget-section'>
         <div className='widget-section_inner'>
@@ -66,7 +70,7 @@ const WidgetSection = (props) => {
             <div className='widget-item' onClick={() => props.onItemClick("door monitoring")}>
               <img src="/assets/icons/door-handle.png" alt=''/>
               <div className='widget-text'>
-                Close - Lock
+                <b>Close - Lock</b>
               </div>
             </div>
 

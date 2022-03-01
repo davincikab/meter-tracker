@@ -167,66 +167,67 @@ function MapPage() {
   return (
     <div className="map-wrapper">
       <div className='autoComplete_wrapper'>
-        <div className='icon-search'> 
-            <FaSearch />
-        </div>
-        <Autocomplete
-          getItemValue={(item) => searchField === 'District' ? item : item["Cell Tower Name"]}
-          items={searchField !== 'District' ? [...cellTower] : [...districts]}
-          shouldItemRender={(item, value) => {
-            if(searchField === 'District') {
-              return item.toLowerCase().indexOf(value.toLowerCase()) > -1
+        <div className='search-section'>
+          <div className='icon-search'> 
+              <FaSearch />
+          </div>
+          <Autocomplete
+            getItemValue={(item) => searchField === 'District' ? item : item["Cell Tower Name"]}
+            items={searchField !== 'District' ? [...cellTower] : [...districts]}
+            shouldItemRender={(item, value) => {
+              if(searchField === 'District') {
+                return item.toLowerCase().indexOf(value.toLowerCase()) > -1
+              }
+
+              return item[searchField].toLowerCase().indexOf(value.toLowerCase()) > -1
+            }}
+            renderItem={(item, isHighlighted) =>
+              <div 
+                className="list-item" 
+                style={{ 
+                  background: isHighlighted ? '#ee6782' : 'white',
+                  color:isHighlighted ? 'white' : '#333' 
+                }} 
+                key={searchField === 'District' ? item :item[searchField]}
+              >
+                { searchField === 'District' && ` ${item}`}
+                { searchField !== 'District' && `${item["Cell Tower Name"]}, ${item["District"]}`}
+              </div>
             }
+            value={value}
+            onChange={(e) => onValueChange(e.target.value)}
+            onSelect={(val) => onSelect(val)}
+            inputProps={{
+              placeholder:'Search Cell Tower ...'
+            }}
+          />
 
-            return item[searchField].toLowerCase().indexOf(value.toLowerCase()) > -1
-          }}
-          renderItem={(item, isHighlighted) =>
-            <div 
-              className="list-item" 
-              style={{ 
-                background: isHighlighted ? '#ee6782' : 'white',
-                color:isHighlighted ? 'white' : '#333' 
-              }} 
-              key={searchField === 'District' ? item :item[searchField]}
-            >
-              { searchField === 'District' && ` ${item}`}
-              { searchField !== 'District' && `${item["Cell Tower Name"]}, ${item["District"]}`}
+          </div>
+          {/* select the field */}
+          <div className='section-field'>
+            <div>
+              <input 
+                name="search_field" 
+                type="radio" 
+                value="Cell Tower Name" 
+                id="tower" 
+                onChange={updateSearchField} 
+                checked={searchField === "Cell Tower Name"}
+              />
+              <label htmlFor='tower'>Name</label>
             </div>
-          }
-          value={value}
-          onChange={(e) => onValueChange(e.target.value)}
-          onSelect={(val) => onSelect(val)}
-          inputProps={{
-            placeholder:'Search Cell Tower ...'
-          }}
-        />
-
-
-        {/* select the field */}
-        <div className='section-field'>
-          <div>
-            <input 
-              name="search_field" 
-              type="radio" 
-              value="Cell Tower Name" 
-              id="tower" 
-              onChange={updateSearchField} 
-              checked={searchField === "Cell Tower Name"}
-            />
-            <label htmlFor='tower'>Name</label>
+            <div>
+              <input  
+                name="search_field"  
+                type="radio"  
+                value="District"  
+                id="district"  
+                onChange={updateSearchField} 
+                checked={searchField === "District"}
+              />
+              <label htmlFor='district'>District</label>
+            </div>
           </div>
-          <div>
-            <input  
-              name="search_field"  
-              type="radio"  
-              value="District"  
-              id="district"  
-              onChange={updateSearchField} 
-              checked={searchField === "District"}
-            />
-            <label htmlFor='district'>District</label>
-          </div>
-        </div>
       </div>
 
       <div className="section-district d-none">
