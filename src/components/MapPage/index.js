@@ -131,11 +131,19 @@ function MapPage() {
 
   const updateSearchField = (e) => {
     const { value } = e.target;
+    // let { districtTowers, districtPolygon } = {}
+    // if(value == 'Name') {
+
+    // }
 
     setState({
       ...state,
-      searchField:value
+      value:'',
+      searchField:value,
+      districtPolygon:null,
+      districtTowers:[]
     });
+
   }
 
   const getDistrictsPolygon = (cellTowers) => {
