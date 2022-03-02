@@ -26,18 +26,31 @@ const CellMarkers = ({ items}) => {
         let i = Math.ceil(Math.random() * 3);
         return colors[i];
     }
+
+    const addItemColors = (items) => {
+        return items.map(item => {
+            item.color = getIconColor();
+
+            return item
+        });
+
+    
+    }
+
+    let cellTowers = items ? addItemColors(items || []) : [];
+
     return (
         <>
             <Layer 
                 id="cell-tower"
                 type="symbol" 
                 layout={{ "icon-image": "cell-tower",  "icon-size":0.75}}
-                paint={{"icon-color":getIconColor()}}
+                paint={{"icon-color":['get', 'color']}}
                 onMouseEnter={handleMouseEnter}
                 omMouseLeave={handleMouseLeave}
             >
                 { 
-                    items.map(item => (
+                    cellTowers.map(item => (
                         <Feature 
                             coordinates={[item.Long, parseFloat(item.Latt)]} 
                             key={item['Cell Tower Name']} 
