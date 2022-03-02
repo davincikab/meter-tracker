@@ -252,7 +252,7 @@ function MapPage() {
           </div>
       </div>
 
-      <div className={searchField == 'district' ? "section-district" : 'section-district d-none'}>
+      <div className={searchField == 'District' ? "section-district" : 'section-district d-none'}>
           <h6 className='my-0'>Cell Towers in {value}</h6>
           <ul className="list-section">
             {

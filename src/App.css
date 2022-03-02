@@ -217,8 +217,8 @@ div .list-item {
 
 .section-district {
   position: absolute;
-  z-index: 2;
-  top: 13%;
+  z-index: 3;
+  top: 20%;
   background: rgba(34, 34, 34, 0.815);
   color: white;
   left: 2%;
@@ -242,6 +242,8 @@ div .list-item {
   width: auto;
   padding: 0;
   margin: 0px;
+  height: 60vh;
+  overflow-y: auto;
 }
 
 .section-district ul .list-item {
