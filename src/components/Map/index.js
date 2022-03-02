@@ -13,7 +13,7 @@ import { cellTower } from "../../mocks/data";
 
 import Markers from './Markers';
 import CellMarkers from './CellMarkers';
-import customLayer from './utils/customLayer';
+// import customLayer from './utils/customLayer';
 
 const Map = ReactMapboxGl({
   accessToken:
@@ -102,7 +102,7 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, d
             });
         }
 
-        map.addLayer(customLayer, 'waterway-label');
+        // map.addLayer(customLayer, 'waterway-label');
     }
 
     const { isIconLoaded, isTowerIconLoaded, center, clickedFeature, cellTowers, activeCellTower } = state;
