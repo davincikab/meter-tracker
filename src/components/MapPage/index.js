@@ -27,6 +27,20 @@ const INITIAL_STATE = {
 };
 
 function MapPage() {  
+  let info = {
+      powerRating:Math.ceil(Math.random() * 2000),
+      power:Math.ceil(Math.random() * 500),
+      current:Math.ceil(Math.random() * 36),
+      tilt:(Math.random() * 10).toFixed(1),
+      generatorStatus:'Off',
+      fuelLevel:Math.ceil(Math.random() * 100).toFixed(0),
+      antennaLocation:'Normal',
+      temperature:Math.ceil(Math.random() * 40),
+      doorStatus:'Close - Lock',
+      cctv:'Normal',
+      windSpeed:Math.ceil(Math.random() * 40)
+  };
+
   const [state, setState] = useState(INITIAL_STATE);
 
   useEffect(() => {
@@ -251,6 +265,7 @@ function MapPage() {
       <WidgetSection 
         onItemClick={onWidgetClick} 
         activeTower={activeTower}
+        info={info}
       />
 
       <Modal 
@@ -272,6 +287,7 @@ function MapPage() {
         resetActiveTower={() => resetActiveTower(null)}
         updateActiveTower={onSelect}
         districtPolygon={districtPolygon}
+        info={info}
         /> 
       }
     </div>

@@ -20,7 +20,7 @@ const Map = ReactMapboxGl({
   'pk.eyJ1IjoiZGF1ZGk5NyIsImEiOiJjanJtY3B1bjYwZ3F2NGFvOXZ1a29iMmp6In0.9ZdvuGInodgDk7cv-KlujA'
 });
 
-const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, districtPolygon }) => {
+const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, districtPolygon, info }) => {
     const [state, setState ] = useState({
         isIconLoaded:false,
         isTowerIconLoaded:false,
@@ -107,6 +107,7 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, d
 
     const { isIconLoaded, isTowerIconLoaded, center, clickedFeature, cellTowers, activeCellTower } = state;
     console.log(activeCellTower);
+
     return (
         <Map
             ref={mapRef}
@@ -137,6 +138,7 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, d
                     feature={activeTower}
                     layer={'cell-tower'}
                     resetActiveTower={resetActiveTower}
+                    info={info}
                 />
             }
 
@@ -147,6 +149,7 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, d
                     lng={clickedFeature.lng || clickedFeature.Long} 
                     lat={clickedFeature.lat || clickedFeature.Latt}
                     feature={clickedFeature}
+                    info={info}
                     layer={clickedFeature.layer}
                     
                 />
@@ -173,7 +176,7 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, d
     )
 }
 
-const PopupEl = ({ lat, lng, feature, resetActiveTower, layer}) => {
+const PopupEl = ({ lat, lng, feature, resetActiveTower, layer, info}) => {
     return (
         <Popup
             coordinates={[lng, lat]}
@@ -185,12 +188,13 @@ const PopupEl = ({ lat, lng, feature, resetActiveTower, layer}) => {
                 layer={layer} 
                 feature={feature} 
                 resetActiveTower={resetActiveTower} 
+                info={info}
             /> 
         </Popup>
     )
 }
 
-const PopupInfo = ({layer, feature, resetActiveTower}) => {
+const PopupInfo = ({layer, feature, resetActiveTower, info}) => {
     if(layer != 'meters') {
         return (
             <div className='popup-body' >
@@ -250,11 +254,11 @@ const PopupInfo = ({layer, feature, resetActiveTower}) => {
                 <div className='popup-footer'>
                     <div className='popup-footer__inner'>
                         <img src="/assets/icons/activity.png" alt=''/>
-                        <div>1821 KW/h</div>
+                        <div>{info.powerRating} KW/h</div>
                     </div>
                     <div className='popup-footer__inner'>
                         <img src="/assets/icons/right-angle-of-90-degrees.png" alt=''/>
-                        <div>Normal at 0<sup>0</sup></div>
+                        <div>Normal at {info.tilt} °</div>
                     </div>
                 </div>
             </div>
