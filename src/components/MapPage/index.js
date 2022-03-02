@@ -18,6 +18,7 @@ const INITIAL_STATE = {
   meters:[],
   value:"",
   districts:[],
+  districtTowers:[],
   activeTower:null,
   isModalOpen:false,
   statusData,
@@ -75,6 +76,7 @@ function MapPage() {
       
       setState({
         ...state,
+        districtTowers:[...towers],
         value:val,
         districtPolygon:hull
       });
@@ -105,8 +107,13 @@ function MapPage() {
     })
   }
 
-  const handleDistrictClick = (district) => {
-    console.log(district);
+  const handleDistrictClick = (tower) => {
+    console.log(tower);
+
+    setState({
+      ...state,
+      activeTower:tower
+    });
   }
 
   const onStatusItemClick = (status) => {
@@ -170,7 +177,8 @@ function MapPage() {
   }
 
   const { meters, activeTower, districts, value, 
-    isModalOpen, modalContent, statusData, searchField, districtPolygon
+    isModalOpen, modalContent, statusData, searchField, 
+    districtPolygon, districtTowers
   } = state;
 
   if(searchField == 'Districts') {
@@ -244,17 +252,17 @@ function MapPage() {
           </div>
       </div>
 
-      <div className="section-district d-none">
-          <h6 className='my-0'>Districts</h6>
+      <div className={searchField == 'district' ? "section-district" : 'section-district d-none'}>
+          <h6 className='my-0'>Cell Towers in {value}</h6>
           <ul className="list-section">
             {
-              districts.map(district => (
+              districtTowers.map(tower => (
                 <li 
                   className='list-item' 
-                  key={district}
-                  onClick={(e) => handleDistrictClick(district)}
+                  key={tower['Cell Tower Name']}
+                  onClick={(e) => handleDistrictClick(tower)}
                 >
-                  {district}
+                  {tower['Cell Tower Name']}
                 </li>
               ))
             }
