@@ -433,7 +433,7 @@ ul .list-item:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.25rem 0.375rem;
+  padding: 0.25rem 0.75rem;
   margin:1rem 0 0;
 }
 
@@ -467,6 +467,10 @@ ul .list-item:hover {
   padding:0.5rem;
 }
 
+.modal-body .table {
+  width: 86%;
+  margin: 0 auto;
+}
 .table {
   width: 100%;
   border-collapse: collapse;
