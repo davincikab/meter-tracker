@@ -1,9 +1,3 @@
-/* Red font = 
-Yellow font = 
-Blue font = 
-Green font = 
-
-Box colour (pop up) = #09101B transparency = 80% */
 :root {
   --red:#FD5E5E;
   --yellow:#FFC400;
@@ -30,7 +24,7 @@ body {
 
 .mapboxgl-popup-content {
   padding:0;
-  width: 350px;
+  min-width: 350px;
   /* background-color: rgba(34, 34, 34, 0.842) !important; */
   background-color: transparent !important;
   color: #ddd;
@@ -60,7 +54,7 @@ body {
 }
 
 .popup-content {
-  width:350px;
+  min-width:350px;
 }
 
 .popup-content .popup-header {
@@ -582,12 +576,35 @@ ul .list-item:hover {
     min-width: 350px;
     width: calc(350px + 10vw);
   }
+
   .popup-content {
-    width: 400px;
+    /* width: 450px; */
+    width: calc(350px + 10vw);
   }
 
   .table tr {
     line-height: 1.8;
     font-size: calc(1em + 0.1vw);
+  }
+}
+
+@media only screen and (min-width: 1824px) {
+  .mapboxgl-popup-content {
+    min-width: 350px;
+    width: calc(350px + 10vw);
+  }
+  
+  .popup-content {
+    /* width: 450px; */
+    width: calc(350px + 10vw);
+  }
+
+  .table tr {
+    line-height: 1.8;
+    font-size: calc(1em + 0.1vw);
+  }
+
+  .widget-group {
+
   }
 }

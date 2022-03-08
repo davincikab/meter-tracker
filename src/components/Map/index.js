@@ -111,7 +111,7 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, d
     return (
         <Map
             ref={mapRef}
-            style="mapbox://styles/mapbox/dark-v10"
+            style="mapbox://styles/daudi97/ckdy2bhlh3dgt19o67ozjnq9p"
             center={center}
             zoom={[activeTower ? 18 : 19]}
             pitch={[45]}

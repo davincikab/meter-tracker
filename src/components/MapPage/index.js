@@ -306,8 +306,17 @@ function MapPage() {
         info={info}
         /> 
       }
+
+      {/* <img src='/assets/icons/location_red.png'/> */}
     </div>
   );
 }
 
 export default MapPage;
+
+
+// BUGS TO SORT:
+  // - Zoom levels (Map keeps zooming to default zoom level)
+  // - map recenter
+  // - Seeding color generation and random values generation
+  // Sort the 3d Model
