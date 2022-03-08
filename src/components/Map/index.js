@@ -6,7 +6,7 @@ import * as turf from '@turf/turf'
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import meter from '../../assets/icons/electric-meter.png';
-import cellTowerIcon from '../../assets/icons/signal-tower.png';
+import cellTowerIcon from '../../assets/icons/geo.png';
 
 import { cellTower } from "../../mocks/data";
 

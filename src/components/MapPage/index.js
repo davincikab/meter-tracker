@@ -103,7 +103,8 @@ function MapPage() {
   const resetActiveTower = () => {
     setState({
       ...state,
-      activeTower:null
+      activeTower:null,
+      value:""
     })
   }
 

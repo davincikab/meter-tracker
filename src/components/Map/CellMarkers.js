@@ -20,16 +20,23 @@ const CellMarkers = ({ items}) => {
         e.target.getCanvas().style.cursor = "pointer";
     }
 
-    const getIconColor = () => {
-        let colors = ['location_yellow','location_red','location_green'];
+    const getIcon = () => {
+        let icons = ['location_yellow','location_red','location_green'];
 
         let i = Math.ceil(Math.random() * 3);
+        return icons[i];
+    }
+
+    const getIconColor = () => {
+        let colors = ['#C7F500', '#F17B70', '#FFC500'];
+
+        let i = Math.ceil(Math.random() * 2);
         return colors[i];
     }
 
     const addItemColors = (items) => {
         return items.map(item => {
-            item.icon = getIconColor();
+            item.color = getIconColor();
 
             return item
         });
@@ -44,8 +51,11 @@ const CellMarkers = ({ items}) => {
             <Layer 
                 id="cell-tower"
                 type="symbol" 
-                layout={{ 
-                    "icon-image": ['get', 'icon'],  
+                paint={{
+                    "icon-color": ['get', 'color'], 
+                }}
+                layout={{  
+                    "icon-image":"cell-tower",
                     "icon-size":0.2,
                     "icon-padding":0.08
                 }}
