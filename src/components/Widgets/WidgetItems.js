@@ -223,7 +223,7 @@ const GeneratorContent = (props) => {
 
             <Card>
                 <CardNumber 
-                    title="Full Level"
+                    title="Fuel Level"
                     text={`${data[index]['Fuel Level']} %`}
                 />
             </Card>
