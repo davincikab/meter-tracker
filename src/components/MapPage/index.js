@@ -92,6 +92,7 @@ function MapPage() {
     setState({
       ...state,
       activeTower:tower || null,
+      threeD:false,
       value:val
     })
   }
@@ -99,7 +100,8 @@ function MapPage() {
   const onValueChange = (value) => {
     setState({
       ...state,
-      value
+      value,
+      threeD:false
     });
 
   }
@@ -333,10 +335,10 @@ function MapPage() {
         <div className='popup-side-tab'>
           <div className='popup-body' >
                     <div className='popup-header'>
-                        <button className="mapboxgl-close-popup-button" onClick={resetActiveTower}>
+                        {/* <button className="mapboxgl-close-popup-button" onClick={resetActiveTower}>
                             CLOSE
                             <FaTimes />
-                        </button>
+                        </button> */}
                     </div>
                             
                     <div className='popup-section'>
