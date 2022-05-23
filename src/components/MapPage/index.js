@@ -14,6 +14,8 @@ import Modal from '../Modal';
 import StatusContent from '../StatusSection/StatusContent';
 import WidgetItem from '../Widgets/WidgetItems';
 
+import { FaTimes } from 'react-icons/fa';
+
 const INITIAL_STATE = {
   meters:[],
   value:"",
@@ -98,7 +100,8 @@ function MapPage() {
     setState({
       ...state,
       value
-    })
+    });
+
   }
 
   const resetActiveTower = () => {
@@ -107,7 +110,8 @@ function MapPage() {
       activeTower:null,
       threeD:false,
       value:""
-    })
+    });
+
   }
 
   const handleDistrictClick = (tower) => {
@@ -323,6 +327,76 @@ function MapPage() {
 
           <label htmlFor='toggle-view' className='label'>3D</label>
         </div>
+      }
+
+      { (activeTower && threeD) &&
+        <div className='popup-side-tab'>
+          <div className='popup-body' >
+                    <div className='popup-header'>
+                        <button className="mapboxgl-close-popup-button" onClick={resetActiveTower}>
+                            CLOSE
+                            <FaTimes />
+                        </button>
+                    </div>
+                            
+                    <div className='popup-section'>
+                        <div className='popup-section__inner'>
+                            <div>
+                                <div className='popup-item'><div>Site Name: </div>  {activeTower["Cell Tower Name"]} </div>
+                                <div className='popup-item'><div>District: </div>  {activeTower["District"]}</div>
+                            </div>
+
+                            <div className='status'> GOOD </div>
+                        </div>
+                      
+
+                        <div className=''>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>SUMMARY</th>
+                                        <th>STATUS</th>
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    <tr>
+                                        <td>Door</td>
+                                        <td>Close (unlocked)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Structure</td>
+                                        <td>OK</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Illegal Installation</td>
+                                        <td>None</td>
+                                    </tr>
+                                    <tr> 
+                                        <td>Illegal Activity</td>
+                                        <td>None</td>
+                                    </tr>
+                                    <tr> 
+                                        <td>Energy</td>
+                                        <td>Normal</td> 
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div className='popup-footer'>
+                        <div className='popup-footer__inner'>
+                            <img src="/assets/icons/activity.png" alt=''/>
+                            <div>{info.powerRating} KW/h</div>
+                        </div>
+                        <div className='popup-footer__inner'>
+                            <img src="/assets/icons/right-angle-of-90-degrees.png" alt=''/>
+                            <div>Normal at {info.tilt} °</div>
+                        </div>
+                    </div>
+                </div>
+          </div>
       }
       
 

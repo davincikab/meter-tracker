@@ -157,6 +157,25 @@ body {
   z-index: 2;
 }
 
+.popup-side-tab {
+  position: absolute;
+  left:3%;
+  top:25%;
+  width: 400px;
+  padding: 0.25rem;
+  color:white;
+  z-index: 2;
+  background-color: #222;
+  border-radius: 8px;
+  box-shadow: 0px 0px 0.25rem #222;
+}
+
+.popup-side-tab .mapboxgl-close-popup-button {
+  position: relative;
+  top:0;
+  right: 0;
+  left: 75%;
+}
 .autoComplete_wrapper {
   display: inline-block;
   position: absolute;

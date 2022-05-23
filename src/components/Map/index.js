@@ -144,7 +144,7 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, d
             }
 
             {   
-                activeTower && 
+                (activeTower && !threeD) &&
                 <PopupEl
                     lng={activeTower.Long} 
                     lat={parseFloat(activeTower.Latt)}
