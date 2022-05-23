@@ -24,7 +24,8 @@ const INITIAL_STATE = {
   statusData,
   modalContent:"",
   searchField:"Cell Tower Name",
-  districtPolygon:null
+  districtPolygon:null,
+  threeD:false
 };
 
 function MapPage() {  
@@ -104,6 +105,7 @@ function MapPage() {
     setState({
       ...state,
       activeTower:null,
+      threeD:false,
       value:""
     })
   }
@@ -143,6 +145,15 @@ function MapPage() {
       searchField:value,
       districtPolygon:null,
       districtTowers:[]
+    });
+
+  }
+
+  // toggle 3D view
+  const toggle3DView = () => {
+    setState({
+      ...state,
+      threeD:!state.threeD
     });
 
   }
@@ -187,7 +198,7 @@ function MapPage() {
 
   const { meters, activeTower, districts, value, 
     isModalOpen, modalContent, statusData, searchField, 
-    districtPolygon, districtTowers
+    districtPolygon, districtTowers, threeD
   } = state;
 
   if(searchField == 'Districts') {
@@ -298,6 +309,23 @@ function MapPage() {
         data={statusData} 
       />
 
+      {/* 3d toggler */}
+      {
+        activeTower && 
+
+        <div className='toggle-view'>
+          <input 
+            type="checkbox" 
+            id="toggle-view" 
+            onChange={toggle3DView} 
+            checked={threeD} 
+          />
+
+          <label htmlFor='toggle-view' className='label'>3D</label>
+        </div>
+      }
+      
+
       { meters[0] && <MapComponent 
         data={meters} 
         activeTower={activeTower} 
@@ -305,7 +333,8 @@ function MapPage() {
         updateActiveTower={onSelect}
         districtPolygon={districtPolygon}
         info={info}
-        /> 
+        threeD={threeD}
+      /> 
       }
 
       {/* <img src='/assets/icons/location_red.png'/> */}

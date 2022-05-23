@@ -13,14 +13,14 @@ import { cellTower } from "../../mocks/data";
 
 import Markers from './Markers';
 import CellMarkers from './CellMarkers';
-// import customLayer from './utils/customLayer';
+import customLayer from './utils/customLayer';
 
 const Map = ReactMapboxGl({
   accessToken:
   'pk.eyJ1IjoiZGF1ZGk5NyIsImEiOiJjanJtY3B1bjYwZ3F2NGFvOXZ1a29iMmp6In0.9ZdvuGInodgDk7cv-KlujA'
 });
 
-const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, districtPolygon, info }) => {
+const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, districtPolygon, info, threeD }) => {
     const [state, setState ] = useState({
         isIconLoaded:false,
         isTowerIconLoaded:false,
@@ -41,21 +41,32 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, d
                 ...state,
                 center:[activeTower.Long, parseFloat(activeTower.Latt)],
                 // activeCellTower:activeTower
-            })
+            });
+
+            console.log(mapRef);
+            let { map } = mapRef.current.state;
+            if(threeD && activeTower)  {
+                map.addLayer(
+                    customLayer([
+                        activeTower.Long,
+                        parseFloat(activeTower.Latt)
+                    ]), 
+                    'waterway-label'
+                );
+            } 
+            else {
+                if(map.getLayer('3d-model')) map.removeLayer('3d-model');
+            }
         }
 
         if(districtPolygon && mapRef) {
             let { map } = mapRef.current.state;
 
-            console.log(map);
-
             let bounds = turf.bbox(districtPolygon);
             map.fitBounds(bounds, { paddding:150});
         }
 
-        console.log(mapRef);
-
-    }, [activeTower, districtPolygon]);
+    }, [activeTower, districtPolygon, threeD]);
 
     const handleClick = (map, e) => {
         let features = map.queryRenderedFeatures(e.point, { layers:[ 'cell-tower'] });
@@ -102,11 +113,13 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, d
             });
         }
 
-        // map.addLayer(customLayer, 'waterway-label');
+        if(map.getLayer('3d-model')) map.removeLayer('3d-model');
+        
     }
 
     const { isIconLoaded, isTowerIconLoaded, center, clickedFeature, cellTowers, activeCellTower } = state;
-    console.log(activeCellTower);
+    console.log(activeTower);
+    console.log("3D: ", threeD);
 
     return (
         <Map
@@ -114,7 +127,7 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, d
             style="mapbox://styles/daudi97/ckdy2bhlh3dgt19o67ozjnq9p"
             center={center}
             zoom={[activeTower ? 18 : 19]}
-            pitch={[45]}
+            pitch={[threeD ? 45 : 10]}
             containerStyle={{
                 height: '100vh',
                 width: '100vw'
@@ -283,4 +296,6 @@ export default MapComponent;
 
 // Color the pins
 // Color Geofences
-//  Widgets
+// Widgets
+
+// Toggle 3D models
