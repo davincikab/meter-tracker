@@ -1,6 +1,6 @@
 // import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
 import * as THREE from 'three';
-import GLTFLoader from 'three-gltf-loader';
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 // import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js';
 
 import mapboxgl from 'mapbox-gl';
