@@ -40,36 +40,18 @@ const customLayer = function(origin) {
         onAdd: function (map, gl) {
             this.camera = new THREE.Camera();
             this.scene = new THREE.Scene();
-            
-            // create two three.js lights to illuminate the model
-            const directionalLight = new THREE.DirectionalLight(0xffffff);
-            directionalLight.position.set(0, -70, 100).normalize();
-            this.scene.add(directionalLight);
-            
-            const directionalLight2 = new THREE.DirectionalLight(0xffffff);
-            directionalLight2.position.set(0, 70, 100).normalize();
-            // this.scene.add(directionalLight2);
 
-            const directionalLight3 = new THREE.DirectionalLight(0xff0000);
-            directionalLight3.position.set(-130, 50, 100).normalize();
-            // this.scene.add(directionalLight3);
-
-            const light = new THREE.PointLight( 0xffffff, 1, 100 );
-            light.position.set( 50, 50, 50 );
-            this.scene.add( light );
-
-            const light2 = new THREE.AmbientLight(0xFFFFFF, 1, 100);
-            // light2.position.set( 50, 150, 50 );
-            this.scene.add( light2 );
-
-            const directionalLight4 = new THREE.DirectionalLight(0xffffff);
-            directionalLight4.position.set(130, 50, 100).normalize();
-            // this.scene.add(directionalLight4);
+            const light = new THREE.AmbientLight(0xffffff, 0.8);
+            this.scene.add(light);
             
             // use the three.js GLTF loader to add the 3D model to the three.js scene
             loader.load('/assets/gltf/model.gltf', (gltf) => {
                 console.log(gltf);
-                gltf.scene.scale.set(0.03, 0.01, 0.03);
+                gltf.scene.traverse( child => {
+                    if ( child.material ) child.material.metalness = 0;
+                });
+
+                gltf.scene.scale.set(0.021, 0.01, 0.021);
                 this.scene.add(gltf.scene);
             });
 

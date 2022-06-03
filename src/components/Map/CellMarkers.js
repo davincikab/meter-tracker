@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Layer, Feature} from 'react-mapbox-gl';
 
-const CellMarkers = ({ items}) => {
+const CellMarkers = ({ items, activeTower, threeD }) => {
     // console.log(items);
 
     const [state, setState ] = useState({
@@ -10,7 +10,9 @@ const CellMarkers = ({ items}) => {
 
     useEffect(() => {
         setState({clickedFeature:null });
-    }, [state.clickedFeature]);
+
+        console.log("Rerendering");
+    }, [state.clickedFeature, threeD]);
 
     const handleMouseLeave = (e) => {
         e.target.getCanvas().style.cursor = "";
@@ -44,6 +46,19 @@ const CellMarkers = ({ items}) => {
     
     }
 
+    const renderFeatures = (items) => {
+        if(threeD ) {
+            items = items.filter(item => item['Cell Tower Name'] != activeTower['Cell Tower Name'])
+        }
+
+        console.log(threeD);
+        return items.map((item, i) => ( <Feature 
+            coordinates={[item.Long ,item.Latt]} 
+            key={`item-${i}`} 
+            properties={item}
+        />));
+    }
+
     let cellTowers = items ? addItemColors(items || []) : [];
 
     return (
@@ -63,13 +78,7 @@ const CellMarkers = ({ items}) => {
                 omMouseLeave={handleMouseLeave}
             >
                 { 
-                    cellTowers.map(item => (
-                        <Feature 
-                            coordinates={[item.Long, parseFloat(item.Latt)]} 
-                            key={item['Cell Tower Name']} 
-                            properties={item}
-                        /> 
-                    ))
+                   renderFeatures(items)
                 }
             </Layer>
         </>

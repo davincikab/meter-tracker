@@ -126,8 +126,8 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, d
             ref={mapRef}
             style="mapbox://styles/daudi97/ckdy2bhlh3dgt19o67ozjnq9p"
             center={center}
-            zoom={[activeTower ? 18 : 19]}
-            pitch={[threeD ? 45 : 10]}
+            zoom={[activeTower ? 18.8 : 19]}
+            pitch={[threeD ? 60 : 10]}
             containerStyle={{
                 height: '100vh',
                 width: '100vw'
@@ -140,6 +140,8 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, d
                 isTowerIconLoaded &&
                 <CellMarkers 
                     items={cellTowers} 
+                    activeTower={activeTower}
+                    threeD={threeD}
                 />
             }
 

@@ -92,7 +92,7 @@ function MapPage() {
     setState({
       ...state,
       activeTower:tower || null,
-      threeD:false,
+      threeD:tower ? true : false,
       value:val
     })
   }
