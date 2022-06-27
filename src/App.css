@@ -209,6 +209,13 @@ body {
   margin: 0.5rem;
 }
 
+.popup-side-tab#tab-images .img-items .div-link {
+  text-decoration: none;
+  margin:0 1rem;
+  flex: 1;
+}
+
+
 #tab-images .close-button {
   position: absolute;
   color:tomato;
@@ -243,12 +250,7 @@ body {
 
 .popup-side-tab#tab-images .img-items img {
   width: 100%;
-  height: 120px;
-}
-
-.popup-side-tab#tab-images .img-items > div{
-  flex: 1;
-  margin:0 1rem;
+  height: calc(120px + 3vh);
 }
 
 
