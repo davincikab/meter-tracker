@@ -4,6 +4,7 @@
   --blue:#0BC6D3;
   --green:#C6F500;
   --white:#fff;
+  --black:hsla(217, 50%, 7%, 0.80);
 
   --bg-color:hsla(217, 50%, 7%, 0.80);
 }
@@ -159,7 +160,7 @@ body {
 
 .popup-side-tab {
   position: absolute;
-  left:3%;
+  right:20%;
   top:25%;
   width: 400px;
   padding: 0.25rem;
@@ -170,12 +171,81 @@ body {
   box-shadow: 0px 0px 0.25rem #222;
 }
 
+.popup-side-tab .point { 
+  margin:1rem 0;
+  
+}
+
 .popup-side-tab .mapboxgl-close-popup-button {
   position: relative;
   top:0;
   right: 0;
   left: 75%;
 }
+
+.popup-side-tab#tab-images {
+  top:10%;
+  z-index: 3;
+}
+
+.popup-side-tab#tab-images .image-section {
+    height: 55vh;
+    overflow-y: auto;
+}
+
+.popup-header {
+  padding: 0.75rem;
+}
+
+.popup-side-tab#tab-images .toggler-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.popup-side-tab#tab-images .img-items {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0.5rem;
+}
+
+#tab-images .close-button {
+  position: absolute;
+  color:tomato;
+  top:-35px;
+  width: 100px;
+  border-radius: 5px;
+  background-color: rgba(34, 34, 34, 0.836);
+  right:0;
+  cursor: pointer;
+  padding: 0.25rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  border:none;
+}
+
+.toggler-section .toggler {
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+.toggler-section .toggler.active { 
+  background-color: var(--white);
+  color:var(--black);
+  border-radius: 2px;
+}
+
+.image-section .title-section {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.popup-side-tab#tab-images .img-items img {
+  width: 150px;
+  height: 100px;
+}
+
 .autoComplete_wrapper {
   display: inline-block;
   position: absolute;
@@ -570,6 +640,11 @@ ul .list-item:hover {
 }
 
 /* util classes */
+.d-flex {
+  display: flex;
+  justify-content: space-between;
+}
+
 .d-none {
   display: none !important;
 }

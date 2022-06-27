@@ -2,6 +2,11 @@ import { FaLightbulb, FaSearch } from 'react-icons/fa';
 
 const WidgetSection = (props) => {
     let { info } = props;
+
+    const handleClick = () => {
+      props.updateImageDivStatus();
+    }
+
     return (
         <div className='widget-section'>
         <div className='widget-section_inner'>
@@ -71,7 +76,9 @@ const WidgetSection = (props) => {
               </div>
             </div>
 
-            <div className='widget-item'>
+            <div className='widget-item' 
+              onClick={handleClick} 
+            >
               <img src="/assets/icons/cctv.png" alt=''/>
               <div className='widget-text'>
                 <b>{info.cctv}</b>

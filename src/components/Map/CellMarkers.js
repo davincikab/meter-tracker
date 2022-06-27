@@ -78,7 +78,7 @@ const CellMarkers = ({ items, activeTower, threeD }) => {
                 omMouseLeave={handleMouseLeave}
             >
                 { 
-                   renderFeatures(items)
+                   renderFeatures(cellTowers)
                 }
             </Layer>
         </>

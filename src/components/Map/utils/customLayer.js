@@ -51,7 +51,7 @@ const customLayer = function(origin) {
                     if ( child.material ) child.material.metalness = 0;
                 });
 
-                gltf.scene.scale.set(0.021, 0.01, 0.021);
+                gltf.scene.scale.set(0.020, 0.01, 0.020);
                 this.scene.add(gltf.scene);
             });
 

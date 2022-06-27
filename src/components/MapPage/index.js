@@ -14,7 +14,9 @@ import Modal from '../Modal';
 import StatusContent from '../StatusSection/StatusContent';
 import WidgetItem from '../Widgets/WidgetItems';
 
+import { cctvData } from '../../mocks/data';
 import { FaTimes } from 'react-icons/fa';
+import ImageDiv from '../Widgets/ImageDiv';
 
 const INITIAL_STATE = {
   meters:[],
@@ -27,7 +29,9 @@ const INITIAL_STATE = {
   modalContent:"",
   searchField:"Cell Tower Name",
   districtPolygon:null,
-  threeD:false
+  threeD:false,
+  isDivOpen:false,
+  extrusionPoint:null
 };
 
 function MapPage() {  
@@ -93,6 +97,7 @@ function MapPage() {
       ...state,
       activeTower:tower || null,
       threeD:tower ? true : false,
+      extrusionPoint:null,
       value:val
     })
   }
@@ -110,6 +115,7 @@ function MapPage() {
     setState({
       ...state,
       activeTower:null,
+      extrusionPoint:null,
       threeD:false,
       value:""
     });
@@ -123,6 +129,18 @@ function MapPage() {
       ...state,
       activeTower:tower
     });
+  }
+
+  const updateExtrusionPoints = (point, tower) => {
+    console.log(tower);
+
+    setState({
+      ...state,
+      activeTower:tower,
+      threeD:true,
+      extrusionPoint:point
+    });
+
   }
 
   const onStatusItemClick = (status) => {
@@ -159,7 +177,8 @@ function MapPage() {
   const toggle3DView = () => {
     setState({
       ...state,
-      threeD:!state.threeD
+      threeD:!state.threeD,
+      extrusionPoint:null
     });
 
   }
@@ -188,6 +207,14 @@ function MapPage() {
 
   }
 
+  const updateImageDivStatus = () => {
+    setState({
+      ...state,
+      isDivOpen:!state.isDivOpen
+    });
+
+  }
+
   const getModalContent = (isStatus, title, data) => {
     if(isStatus) {
       return (
@@ -204,7 +231,8 @@ function MapPage() {
 
   const { meters, activeTower, districts, value, 
     isModalOpen, modalContent, statusData, searchField, 
-    districtPolygon, districtTowers, threeD
+    districtPolygon, districtTowers, threeD, extrusionPoint,
+    isDivOpen
   } = state;
 
   if(searchField == 'Districts') {
@@ -300,6 +328,7 @@ function MapPage() {
         onItemClick={onWidgetClick} 
         activeTower={activeTower}
         info={info}
+        updateImageDivStatus={updateImageDivStatus}
       />
 
       <Modal 
@@ -329,6 +358,14 @@ function MapPage() {
 
           <label htmlFor='toggle-view' className='label'>3D</label>
         </div>
+      }
+
+      { (isDivOpen && activeTower) &&
+        <ImageDiv 
+          activeTower={activeTower}
+          updateImageDivStatus={updateImageDivStatus}
+          cctvData={cctvData}
+        />
       }
 
       { (activeTower && threeD) &&
@@ -398,6 +435,16 @@ function MapPage() {
                         </div>
                     </div>
                 </div>
+
+                {/* extrusion point info */}
+                {extrusionPoint &&
+                <div className='point'>
+                    <div className='title'>${extrusionPoint.properties.point_name}</div>
+                    <div className='description'>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis et.
+                    </div>
+                </div>
+                }
           </div>
       }
       
@@ -410,6 +457,7 @@ function MapPage() {
         districtPolygon={districtPolygon}
         info={info}
         threeD={threeD}
+        updateExtrusionPoints={updateExtrusionPoints}
       /> 
       }
 

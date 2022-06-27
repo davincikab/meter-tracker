@@ -14,18 +14,23 @@ import { cellTower } from "../../mocks/data";
 import Markers from './Markers';
 import CellMarkers from './CellMarkers';
 import customLayer from './utils/customLayer';
+import MarkerExtrusion from './MarkerExtrusion';
 
 const Map = ReactMapboxGl({
   accessToken:
   'pk.eyJ1IjoiZGF1ZGk5NyIsImEiOiJjanJtY3B1bjYwZ3F2NGFvOXZ1a29iMmp6In0.9ZdvuGInodgDk7cv-KlujA'
 });
 
-const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, districtPolygon, info, threeD }) => {
+const MapComponent = ({ 
+    data, activeTower, resetActiveTower, updateExtrusionPoints,
+    updateActiveTower, districtPolygon, info, threeD 
+}) => {
     const [state, setState ] = useState({
         isIconLoaded:false,
         isTowerIconLoaded:false,
         meters:[...data],
         center:[101.615067, 3.082352],
+        // center:[101.62407323313387, 3.073358796362755],
         // center:[148.9819, -35.39847],
         clickedFeature: null,
         cellTowers:[...cellTower],
@@ -39,7 +44,7 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, d
         if(activeTower) {
             setState({
                 ...state,
-                center:[activeTower.Long, parseFloat(activeTower.Latt)],
+                center:[activeTower.Long + 0.0004, parseFloat(activeTower.Latt) + 0.0003],
                 // activeCellTower:activeTower
             });
 
@@ -66,9 +71,16 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, d
             map.fitBounds(bounds, { paddding:150});
         }
 
+        // clean the activeTower
+        return () => {
+            
+        }
+
     }, [activeTower, districtPolygon, threeD]);
 
     const handleClick = (map, e) => {
+        console.log(e);
+
         let features = map.queryRenderedFeatures(e.point, { layers:[ 'cell-tower'] });
         let layer = features[0] ? features[0].layer.id : "";
 
@@ -78,6 +90,20 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, d
             updateActiveTower(features[0].properties['Cell Tower Name'])
             return;
         }
+
+        // query the point section
+        if(map.getLayer('extrusion')) {
+            let extFeatures = map.queryRenderedFeatures(e.point, { layers:[ 'extrusion'] });
+            console.log(extFeatures);
+
+
+            // update the extrusion info
+            console.log(activeTower);
+            // updateExtrusionPoints(extFeatures[0], activeTower);
+            return;
+        }
+
+    
         setState({
             ...state,
             clickedFeature:features[0] ? {...features[0].properties, layer} : null,
@@ -185,6 +211,13 @@ const MapComponent = ({data, activeTower, resetActiveTower, updateActiveTower, d
                         "text-anchor": "top"
                     }}
                     before={"cell-tower"}
+                />
+            }
+
+            {
+                (threeD && activeTower) &&
+                <MarkerExtrusion 
+                    activeTower={activeTower}
                 />
             }
         </Map>
