@@ -206,7 +206,6 @@ body {
 
 .popup-side-tab#tab-images .img-items {
   display: flex;
-  justify-content: space-evenly;
   margin: 0.5rem;
 }
 
@@ -243,9 +242,15 @@ body {
 }
 
 .popup-side-tab#tab-images .img-items img {
-  width: 90%;
+  width: 100%;
   height: 120px;
 }
+
+.popup-side-tab#tab-images .img-items > div{
+  flex: 1;
+  margin:0 1rem;
+}
+
 
 .autoComplete_wrapper {
   display: inline-block;
