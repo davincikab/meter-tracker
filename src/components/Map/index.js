@@ -44,7 +44,7 @@ const MapComponent = ({
         if(activeTower) {
             setState({
                 ...state,
-                center:[activeTower.Long + 0.0004, parseFloat(activeTower.Latt) + 0.0003],
+                center:[activeTower.Long + 0.0006, parseFloat(activeTower.Latt) + 0.0003],
                 // activeCellTower:activeTower
             });
 
