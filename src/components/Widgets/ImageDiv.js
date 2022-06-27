@@ -48,8 +48,8 @@ const ImageDiv = ({activeTower, updateImageDivStatus, cctvData}) => {
 
             {data.map((cctv, index) => {
               return (<div className='img-items' id={cctv.Id} key={index}>
-                  <a href={cctv.cctvBefore} className="div-link" target="_blank"> <img src={cctv.Before} alt={cctv.Id} /> </a>
-                  <a href={cctv.cctvAfter} className="div-link" target="_blank"> <img src={cctv.After} alt={cctv.Id} /> </a>
+                  <a href={`${cctv.Before}`} className="div-link" target="_blank"> <img src={cctv.Before} alt={cctv.Id} /> </a>
+                  <a href={`${cctv.After}`} className="div-link" target="_blank"> <img src={cctv.After} alt={cctv.Id} /> </a>
               </div>)
             })}
           </div>
