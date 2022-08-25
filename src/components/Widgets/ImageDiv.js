@@ -21,9 +21,10 @@ const ImageDiv = ({activeTower, updateImageDivStatus, cctvData}) => {
         <div className='popup-side-tab' id='tab-images'>
           <div className='popup-header'>
             <div className='toggler-section'>
-                <div className="d-flex">
+                <div className="tab-toggler d-flex">
                     <div className={cctv == 'CCTV1' ? 'toggler active':'toggler'} onClick={() => handleCCTVChange('CCTV1')} >CCTV1</div>
                     <div className={cctv == 'CCTV2' ? 'toggler active':'toggler'} onClick={() => handleCCTVChange('CCTV2')} >CCTV2</div>
+                    <div className={cctv == 'Antenna' ? 'toggler active':'toggler'} onClick={() => handleCCTVChange('Antenna')} >Antenna Location</div>
                 </div>
               
                 <div className='toggler text-warning'>{activeTower["Cell Tower Name"]}</div>

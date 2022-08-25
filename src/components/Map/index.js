@@ -68,7 +68,7 @@ const MapComponent = ({
             let { map } = mapRef.current.state;
 
             let bounds = turf.bbox(districtPolygon);
-            map.fitBounds(bounds, { paddding:150});
+            map.fitBounds(bounds, { paddding:450 });
         }
 
         // clean the activeTower

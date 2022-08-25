@@ -185,6 +185,7 @@ body {
 
 .popup-side-tab#tab-images {
   width: 40vw;
+  min-width: 450px;
   top:10%;
   z-index: 3;
 }
@@ -202,6 +203,20 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 12px;
+  margin-bottom: 0.5rem;
+}
+
+#tab-images > .popup-header {
+  padding: 0px;
+}
+
+.toggler-section .tab-toggler > div {
+  padding:0.5rem;
+}
+
+.toggler-section .tab-toggler {
+  background: #333;
 }
 
 .popup-side-tab#tab-images .img-items {
@@ -344,7 +359,7 @@ div .list-item {
   width: auto;
   padding: 0;
   margin: 0px;
-  height: 60vh;
+  max-height:calc(40vh + 20px);
   overflow-y: auto;
 }
 
@@ -455,11 +470,11 @@ ul .list-item:hover {
   position: absolute;
   z-index: 2;
   bottom: 5%;
-  left:15%;
+  left:10%;
   display: flex;
   flex-direction: column;
   background-color: #404751f3;
-  width: 70%;
+  width: 65%;
   margin: 0 auto;
   border-radius: 5px;
   box-shadow: 0px 0px 0.2rem #222;
