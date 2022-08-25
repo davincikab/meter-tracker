@@ -55,6 +55,12 @@ const cellTower = [
       "District": "Shah Alam"
     },
     {
+      "Cell Tower Name": "BSD TANGERANG",
+      "Latt":-6.307440, 
+      "Long": 106.627551,
+      "District": "Jakarta"
+    },
+    {
       "Cell Tower Name": "SA0002",
       "Latt": "3.06456",
       "Long": 101.512715,

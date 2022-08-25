@@ -29,13 +29,13 @@ const MapComponent = ({
         isIconLoaded:false,
         isTowerIconLoaded:false,
         meters:[...data],
-        center:[101.615067, 3.082352],
+        center:[106.627551, -6.307440],
         // center:[101.62407323313387, 3.073358796362755],
         // center:[148.9819, -35.39847],
         clickedFeature: null,
         cellTowers:[...cellTower],
         activeCellTower:null,
-        zoom:19
+        zoom:12
     });
 
     const mapRef = React.useRef(null);
@@ -152,7 +152,7 @@ const MapComponent = ({
             ref={mapRef}
             style="mapbox://styles/daudi97/ckdy2bhlh3dgt19o67ozjnq9p"
             center={center}
-            zoom={[activeTower ? 18.8 : 19]}
+            zoom={[activeTower ? 18.8 : 10]}
             pitch={[threeD ? 60 : 10]}
             containerStyle={{
                 height: '100vh',

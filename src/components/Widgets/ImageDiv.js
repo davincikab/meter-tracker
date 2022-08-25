@@ -57,5 +57,4 @@ const ImageDiv = ({activeTower, updateImageDivStatus, cctvData}) => {
     );
 }
 
-
 export default ImageDiv;
