@@ -11,8 +11,10 @@ import {
     Legend,
   } from 'chart.js';
 import { Line, Bar } from 'react-chartjs-2';
+import { useEffect, useState } from 'react';
 
 import { graphData } from '../../mocks/data';
+import userService from '../../services/user.service';
 import addRandomDates from '../../utils/randomDates';
 import randomNumbers from '../../utils/randomNumbers';
 
@@ -117,6 +119,52 @@ const CardNumber = ({ title, text }) => {
 
 // contet section
 const EnergyContent = (props) => {
+    const [state, setState] = useState({
+        values:[],
+        data:[],
+        timezone:''
+    });
+
+    // get the data 
+    useEffect(() => {
+        userService.getDashboardChartCollectionByDate(540640008245, '2022-08-25', '2022-08-25')
+        .then(({ data }) => {
+
+            setState({
+                data:data.chartMeterReadingInfo,
+                timezone:data.timezone
+            });
+
+        })
+        .catch(console.error);
+
+    }, []);
+
+    const getData = () => {
+        const { data, timezone } = state;
+
+
+        let keys = ["current1", "current2", "current3"];
+        let labels = data.map(entry => new Date(entry.timeStamp).toLocaleTimeString().slice(0,-6));
+        let len = labels.length;
+
+        console.log(labels);
+        console.log(data.slice(0, 12));
+
+        let datasets = keys.map(key => {
+            return {
+                label: key,
+                data: data.slice(0, 12).map(entry => parseFloat(entry[key])),
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            };
+        });
+
+        return {
+            labels:labels.slice(0, 12),
+            datasets: [...datasets]
+        }
+    }
     let value = Math.ceil(Math.random() * 150) + 90;
 
     let hourlyValues = randomNumbers(10, 18, 12);
@@ -130,13 +178,7 @@ const EnergyContent = (props) => {
             <Card>
                 <Line 
                     options={getChartOptions("Hourly Energy Usage")} 
-                    data={
-                        getChartData(
-                            ['10:19', '12:19', '14:19', '15:09', '16:29', '16:50', '17:20', '18:30', "19:10", "20:30"],
-                            [ ...hourlyValues ],
-                            false
-                        )
-                    } 
+                    data={getData()} 
                 />
             </Card>
             <Card>
