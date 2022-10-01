@@ -14,7 +14,7 @@ import Modal from '../Modal';
 import StatusContent from '../StatusSection/StatusContent';
 import WidgetItem from '../Widgets/WidgetItems';
 
-import { cctvData } from '../../mocks/data';
+import { cctvData, cameraData } from '../../mocks/data';
 import { FaTimes } from 'react-icons/fa';
 import ImageDiv from '../Widgets/ImageDiv';
 
@@ -365,6 +365,7 @@ function MapPage() {
           activeTower={activeTower}
           updateImageDivStatus={updateImageDivStatus}
           cctvData={cctvData}
+          cameraData={cameraData}
         />
       }
 
